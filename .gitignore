@@ -1,0 +1,14 @@
+*
+!*.*
+!*/
+*.yaml
+CMakeCache.txt
+cmake_install.cmake
+.DS_Store
+.vscode
+Coding Instructions
+Practice Exams
+Exams
+Lecture Notes
+CMakeFiles
+/*.pdf

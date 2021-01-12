@@ -1,0 +1,123 @@
+% This is a LaTeX file. It is a text file that is compiled
+% by a program called LaTeX into a pretty PDF file.
+% If you're viewing this file in Overleaf, you'll see that PDF
+% in the window to the right.
+%
+% This file is for typesetting YOUR ANSWERS to this homework assignment.
+% The LaTeX macro language is complicated, so we have inserted lots of
+% documenting comments into the file. Comments start with '%'
+% and continue to the end of the line. In Overleaf's edit window, they
+% are colored green.
+%
+% Comments prefixed with 'Student:' are relevant to students. Skip any-
+% thing else you don't understand, or ask me.
+
+\documentclass{article}
+%% This is some font management depending on the TeX “engine” being used.
+%% Nothing to worry about.
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\fi
+
+%% Student: These lines describe some document metadata.
+
+\title{Homework 1}
+
+\usepackage{etoolbox}
+\makeatletter\preto{\@title}{Answers to }\makeatother
+\author{%
+%% Student: change the next line to your name!
+    Hongyi Zheng
+\\
+CS-UY 4533 Interactive Computer Graphics
+}
+
+%% These lines set up the question, answer, and solution environments.
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\DeclareSIUnit{\pound}{lb}
+
+\theoremstyle{plain}
+\newtheorem{question}{Question}
+
+\newenvironment{answer}[1][Answer]
+    {\begin{proof}[#1]\renewcommand\qedsymbol{$\vartriangle$}}
+    {\end{proof}}
+\newenvironment{solution}[1][Solution]
+    {\begin{proof}[#1]\renewcommand\qedsymbol{$\blacktriangle$}}
+    {\end{proof}}
+\makeatletter
+    \newcommand{\stepenumdepth}{\advance\@enumdepth\@ne}
+\makeatother
+\AtBeginEnvironment{question}{\stepenumdepth}
+\AtBeginEnvironment{answer}{\stepenumdepth}
+\AtBeginEnvironment{solution}{\stepenumdepth}
+
+
+\usepackage{hyperref}
+%% This is the beginning of the part of the file that describes
+%% the actual text of the document.
+%% That's why it says `\begin{document}' below. :-)
+\begin{document}
+\maketitle
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item
+The first midpoint to check is the midpoint between first $N=(r, 1)$ and $NW = (r-1, 1)$, which is $(r - \frac{1}{2}, 1)$. To avoid floating-point computations, we define $F(x, y) = 4(x^2 + y^2 -r^2)$. Thus, $D_{start} = F(M_{start}) = 5- 4r$. \\
+
+Then, we follow those steps to update $D$:
+\begin{equation*}
+    D_{new} = D_{old} + F(M_{new}) - F(M_{old})
+\end{equation*}
+If $N$ is chosen $(D_{old} < 0)$,
+\begin{equation*}
+\begin{aligned}
+D_{new} &=D_{old}+4\left(x^{2}+(y+1)^{2}-r^{2}\right)-4\left(x^{2}+y^{2}-r^{2}\right) \\
+&=D_{old} +8y+4
+\end{aligned}
+\end{equation*}
+Here, $y$ is the $y-$coordinate of the $M_{old}$, and is also the $y-$coordinate of the chosen $N$. \\
+
+If $NW$ is chosen $(D_{old} \geq 0)$,
+\begin{equation*}
+\begin{aligned}
+D_{new} &=D_{old}+4\left((x-1)^{2}+(y+1)^{2}-r^{2}\right)-4\left(x^{2}+y^{2}-r^{2}\right) \\
+&=D_{old} +8y - 8x + 8
+\end{aligned}
+\end{equation*}
+Here, $y$ is the $y-$coordinate of the $M_{old}$, and is also the $y-$coordinate of the chosen $NW$. However, $x = x_{M_{old}} = x_{NW} + \frac{1}{2}$
+Therefore,
+\begin{equation*}
+\begin{aligned}
+D_{new} &=D_{old} +8y - 8x + 8 \\
+&= D_{old} + 8y_{NW} - 8(x_{NW} + \frac{1}{2}) + 8 \\
+&= D_{old} + 8y_{NW} - 8x_{NW} + 4
+\end{aligned}
+\end{equation*}
+
+In conclusion,
+\begin{equation*}
+    D_{new} =
+    \begin{cases}
+        D_{old} + 8y_N + 4 & (D_{old} < 0) \\
+        D_{old} + 8y_{NW} - 8x_{NW} + 4 & (D_{old} \geq 0)
+    \end{cases}
+\end{equation*}
+
+\item
+In OpenGL's screen coordinate system, the origin is on the bottom-left corner, the $x-$axis increase to the right and the $y-$axis increase to the top. It is not possible to display pixels at $(x, y)$ where $x < 0$ or $y < 0$;
+\end{enumerate}
+
+\end{document}
+\endinput
+%%
+%% End of file `hw04.ans.tex'.
